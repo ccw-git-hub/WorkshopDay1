@@ -61,6 +61,7 @@ async function serveStatic(pathname) {
 }
 
 Bun.serve({
+  hostname: "0.0.0.0",
   port: PORT,
   async fetch(req) {
     const url = new URL(req.url);
