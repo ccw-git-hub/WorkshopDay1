@@ -1,0 +1,41 @@
+name: Build bundle
+
+on:
+  schedule:
+    # Run hourly at the top of each hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+
+# Note: We don't use "on: push" here because this workflow file only exists on the
+# 'main' branch. GitHub would run it for pushes TO 'main', not for pushes to backend,
+# frontend, or cli. We want to rebuild whenever any of those submodules update (or
+# on schedule), so we trigger on schedule/manual instead. The bundle is rebuilt
+# hourly and will automatically commit + push if there are changes to the submodules.
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main with submodules
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Configure git for github-actions[bot]
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Run build script with push
+        run: node scripts/build-bundle.mjs --push
