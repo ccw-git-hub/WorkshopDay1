@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>Snip</h1>
+  <p class="subtitle">Shorten any http(s) URL instantly</p>
+
+  <form class="shorten-form" (ngSubmit)="submit()">
+    <input
+      type="text"
+      placeholder="https://example.com/very/long/url"
+      [ngModel]="inputUrl()"
+      (ngModelChange)="inputUrl.set($event)"
+      name="url"
+      autocomplete="off"
+      [disabled]="loading()"
+    />
+    <button type="submit" [disabled]="loading() || !inputUrl().trim()">
+      {{ loading() ? 'Shortening...' : 'Shorten' }}
+    </button>
+  </form>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (result()) {
+    <div class="result">
+      Short link:
+      <a [href]="result()!.shortUrl" target="_blank">{{ result()!.shortUrl }}</a>
+    </div>
+  }
+
+  <h2>All links</h2>
+
+  @if (links().length === 0) {
+    <p class="empty">No links yet.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Original URL</th>
+          <th>Hits</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (link of links(); track link.code) {
+          <tr>
+            <td><a [href]="link.shortUrl" target="_blank">{{ link.code }}</a></td>
+            <td class="original-url"><a [href]="link.url" target="_blank">{{ link.url }}</a></td>
+            <td>{{ link.hits }}</td>
+            <td>{{ link.createdAt | date:'short' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
