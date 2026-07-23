@@ -83,7 +83,7 @@ runSync('git submodule update --init --remote backend frontend cli');
 // ─────────────────────────────────────────────────────────────────────────────
 
 log('Building frontend...');
-runSync('npm install', { cwd: resolve(ROOT, 'frontend') });
+runSync('npm install --omit=dev', { cwd: resolve(ROOT, 'frontend') });
 runSync('npx ng build', { cwd: resolve(ROOT, 'frontend') });
 
 if (!existsSync(FRONTEND_INDEX)) {
