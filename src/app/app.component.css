@@ -1,87 +1,174 @@
-.container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-family: system-ui, sans-serif;
+/* Component styles — tokens defined in src/styles.css */
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.25rem;
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 6rem 0 3rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid), var(--accent-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
-  color: #666;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
 }
 
+/* ── Chat-style pill form ── */
 .shorten-form {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  transition: box-shadow 0.2s;
+}
+
+.shorten-form:focus-within {
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
 }
 
 .shorten-form input {
   flex: 1;
-  padding: 0.6rem 0.8rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.shorten-form input::placeholder {
+  color: var(--muted);
 }
 
 .shorten-form button {
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  background: #2563eb;
+  flex-shrink: 0;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
   color: #fff;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 107, 107, 0.35);
+  transition: opacity 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+.shorten-form button:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 4px 28px rgba(255, 107, 107, 0.5);
 }
 
 .shorten-form button:disabled {
-  opacity: 0.6;
+  opacity: 0.45;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
+/* ── Feedback ── */
 .error {
-  color: #dc2626;
-  margin-bottom: 0.75rem;
+  color: var(--error-text);
+  font-size: 0.9rem;
+  margin: 0.75rem 0 0 1.25rem;
 }
 
 .result {
-  background: #f0fdf4;
-  border: 1px solid #86efac;
-  padding: 0.6rem 0.8rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-card);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* ── Links card ── */
+.links-section {
+  margin-top: 3rem;
+}
+
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-th, td {
-  text-align: left;
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.88rem;
 }
 
 th {
-  background: #f9fafb;
+  text-align: left;
+  padding: 0.65rem 1rem;
   font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td { background: var(--surface-raised); }
+
 .original-url {
-  max-width: 350px;
+  max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .empty {
-  color: #9ca3af;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
