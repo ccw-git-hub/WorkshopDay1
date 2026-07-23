@@ -54,6 +54,24 @@ function runQuiet(cmd, opts = {}) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// 0. Check/setup git config
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Ensure git user is configured (needed for commits)
+let gitUserEmail = runQuiet('git config user.email').trim();
+let gitUserName = runQuiet('git config user.name').trim();
+
+if (!gitUserEmail) {
+  log('Git user.email not configured; setting to workshop@snip-demo.local');
+  runSync('git config user.email "workshop@snip-demo.local"');
+}
+
+if (!gitUserName) {
+  log('Git user.name not configured; setting to Snip Workshop');
+  runSync('git config user.name "Snip Workshop"');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 1. Update submodules
 // ─────────────────────────────────────────────────────────────────────────────
 
